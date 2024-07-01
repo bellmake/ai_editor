@@ -19,7 +19,7 @@ for i in range(10):
     plt.subplot(1,2,2)
     plt.imshow(img)
     plt.axis('off')
-    trainset.coco.showAnns(annos)
+    trainset.coco.showAnns(annos) # convert annotation to image
     fig.tight_layout()
     plt.savefig('visualization_{}.png'.format(i))
     plt.close()
