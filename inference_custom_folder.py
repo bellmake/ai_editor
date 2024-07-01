@@ -42,10 +42,11 @@ class CustomDataset(Dataset):
         return len(self.files)
 
 
+# target_dir = 'test2017'
 target_dir = 'my_data'
 
-files = glob.glob('/home/baekw92/ai_editor/{}/*.*'.format(target_dir))
-os.makedirs('/home/baekw92/ai_editor/{}'.format(target_dir+'_result'), exist_ok=True)
+files = glob.glob('/home/joseph/study/multimodal/ai_editor/{}/*.*'.format(target_dir))
+os.makedirs('/home/joseph/study/multimodal/ai_editor/{}'.format(target_dir+'_result'), exist_ok=True)
 testset = CustomDataset(files, transforms_test)
 
 testloader = DataLoader(testset, batch_size=1, shuffle=True)

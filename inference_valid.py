@@ -50,7 +50,7 @@ transforms_test = v2.Compose(
     ]
 )
 
-validset = CocoDetection(root='/home/baekw92/ai_editor/val2017', annFile='/home/baekw92/ai_editor/annotations/instances_val2017.json', transforms=transforms_test)
+validset = CocoDetection(root='/home/joseph/study/multimodal/ai_editor/val2017', annFile='/home/joseph/study/multimodal/ai_editor/annotations/instances_val2017.json', transforms=transforms_test)
 validset = datasets.wrap_dataset_for_transforms_v2(validset, target_keys=("boxes", "labels", "masks"))
 
 validloader = DataLoader(validset, batch_size=1, shuffle=True)
@@ -61,6 +61,7 @@ print(device)
 model = maskrcnn_resnet50_fpn(pretrained=True, progress=False).to(device)
 summary(model)
 
+# Validation
 model.eval()
 loader = tqdm(validloader)
 with torch.no_grad():
@@ -72,6 +73,7 @@ with torch.no_grad():
         candidate_idx = torch.where(outputs[0]['scores'] > .5)[0]
         a = draw_segmentation_masks(images[0], torch.where(outputs[0]['masks'][candidate_idx].squeeze(1)>0.8, 1, 0).type(torch.BoolTensor))
         save_image(a,'result.png')
+        # save_image(a,f'result{i+1}.png')
     
 
 
