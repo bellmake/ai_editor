@@ -61,6 +61,8 @@ opt = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=3e-5)
 scheduler = torch.optim.lr_scheduler.MultiStepLR(opt, milestones=[30, 50], gamma=0.1) # 30, 50 epoch마다 한번씩 learning rate가 작아지도록
 
 for epoch in range(num_epochs):
+    
+    # Train
     model.train()
     loader = tqdm(trainloader)
     loss_sum = 0.0
@@ -70,7 +72,7 @@ for epoch in range(num_epochs):
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
         
         losses = model(images, targets)
-        loss = sum(loss for loss in losses.values())
+        loss = sum(loss for loss in losses.values()) # losses : Region Proposal 관련 loss, ROI head 관련 loss들 (Class id, Bounding box, Mask)을 모두 더함
         
         opt.zero_grad()
         loss.backward()
@@ -85,6 +87,7 @@ for epoch in range(num_epochs):
                     
     scheduler.step()
 
+    # Validation
     model.eval()
     loader = tqdm(validloader)
     with torch.no_grad():
