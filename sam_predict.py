@@ -8,14 +8,14 @@ import os
 from sam_utils import show_box, show_mask, show_points
 
 
-sam = sam_model_registry["vit_b"](checkpoint="/home/baekw92/sam_vit_b_01ec64.pth")
+sam = sam_model_registry["vit_b"](checkpoint="/home/joseph/study/multimodal/ai_editor/sam_vit_b_01ec64.pth")
 sam = sam.cuda()
 
 predictor = SamPredictor(sam)
 
 
 # sample image (shushi)
-fname = '/home/baekw92/ai_editor/my_data/KakaoTalk_Photo_2024-05-16-00-39-16.jpeg'
+fname = '/home/joseph/study/multimodal/ai_editor/my_data/optimus2.png'
 
 img = cv2.imread(fname)
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -23,7 +23,7 @@ predictor.set_image(img)
 
 print(predictor.features.shape)
 
-input_point = np.array([[1500, 2000]])  # points
+input_point = np.array([[200, 200]])  # points
 
 input_label = np.array([1])  # 1: foreground / 0: background
 
@@ -31,7 +31,7 @@ plt.figure(figsize=(10,10))
 plt.imshow(img)
 show_points(input_point, input_label, plt.gca())
 plt.axis('on')
-plt.savefig('/home/baekw92/point.png')
+plt.savefig('/home/joseph/study/multimodal/ai_editor/point.png')
 plt.close()
 
 masks, scores, logits = predictor.predict(
@@ -51,7 +51,7 @@ for i, (mask, score) in enumerate(zip(masks, scores)):
     plt.close()
 
 
-input_point = np.array([[1500,3000]])  # points
+input_point = np.array([[200,50]])  # points
 
 input_label = np.array([1])  # 1: foreground / 0: background
 
@@ -59,7 +59,7 @@ plt.figure(figsize=(10,10))
 plt.imshow(img)
 show_points(input_point, input_label, plt.gca())
 plt.axis('on')
-plt.savefig('/home/baekw92/point.png')
+plt.savefig('/home/joseph/study/multimodal/ai_editor/point.png')
 plt.close()
 
 masks, scores, logits = predictor.predict(
@@ -79,7 +79,7 @@ for i, (mask, score) in enumerate(zip(masks, scores)):
     plt.close()
 
 
-input_point = np.array([[1500, 2000],[1350,2300]])  # points
+input_point = np.array([[200, 180],[190,90]])  # points
 
 input_label = np.array([1,0])  # 1: foreground / 0: background
 
@@ -87,7 +87,7 @@ plt.figure(figsize=(10,10))
 plt.imshow(img)
 show_points(input_point, input_label, plt.gca())
 plt.axis('on')
-plt.savefig('/home/baekw92/point.png')
+plt.savefig('/home/joseph/study/multimodal/ai_editor/point.png')
 plt.close()
 
 masks, scores, logits = predictor.predict(
