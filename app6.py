@@ -14,7 +14,7 @@ from segment_anything import sam_model_registry, SamAutomaticMaskGenerator, SamP
 @st.cache_resource
 def get_sam():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    sam = sam_model_registry["vit_h"](checkpoint="/home/baekw92/sam_vit_h_4b8939.pth")
+    sam = sam_model_registry["vit_h"](checkpoint="/home/joseph/study/multimodal/ai_editor/sam_vit_h_4b8939.pth")
     sam = sam.to(device)
 
     generator = SamAutomaticMaskGenerator(sam)
