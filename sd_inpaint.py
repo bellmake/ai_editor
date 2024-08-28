@@ -21,10 +21,6 @@ kernel = np.ones((3,3), np.uint8)
 mask_image = cv2.dilate(np.array(mask_image), kernel, iterations=10) # 경계영역 넓혀줌
 mask_image = cv2.resize(mask_image, (512,512))
 
-# mask_image의 채널 수가 3일 경우(컬러 이미지) 흑백으로 변환
-if mask_image.ndim == 3:
-    mask_image = cv2.cvtColor(mask_image, cv2.COLOR_BGR2GRAY)
-
 image = pipe(prompt=prompt, image=image, mask_image=Image.fromarray(mask_image)).images[0]
 
 image.save('/home/joseph/study/multimodal/ai_editor/my_data_result/inpainted.png')
